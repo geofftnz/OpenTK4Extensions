@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK4Extensions", "OpenTK4Extensions\OpenTK4Extensions.csproj", "{4447CD4A-FB8C-41B0-A387-E4DA2F589EC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK4Extensions", "OpenTK4Extensions\OpenTK4Extensions.csproj", "{4447CD4A-FB8C-41B0-A387-E4DA2F589EC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldGL", "HelloWorldGL\HelloWorldGL.csproj", "{7FB0EEEE-C8F8-4AED-A9E0-F2791FFB1662}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4447CD4A-FB8C-41B0-A387-E4DA2F589EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4447CD4A-FB8C-41B0-A387-E4DA2F589EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4447CD4A-FB8C-41B0-A387-E4DA2F589EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FB0EEEE-C8F8-4AED-A9E0-F2791FFB1662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FB0EEEE-C8F8-4AED-A9E0-F2791FFB1662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FB0EEEE-C8F8-4AED-A9E0-F2791FFB1662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FB0EEEE-C8F8-4AED-A9E0-F2791FFB1662}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
