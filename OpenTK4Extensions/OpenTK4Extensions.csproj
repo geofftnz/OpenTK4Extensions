@@ -5,13 +5,20 @@
     <RootNamespace>OpenTKExtensions</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.7.7" />
     <PackageReference Include="OpenTK" Version="4.4.0" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Common\" />
+    <Folder Include="Components\PostProcess\" />
   </ItemGroup>
 
 </Project>
