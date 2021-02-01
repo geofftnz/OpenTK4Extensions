@@ -3,11 +3,20 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>OpenTKExtensions</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Geoff Thornburrow</Authors>
+    <Description>A collection of extensions for OpenTK4. Somewhat inspired by, and a poor cousin to, XNA. Used for my personal projects.</Description>
+    <Copyright>©2013-2020 Geoff Thornburrow</Copyright>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,5 +29,9 @@
     <Folder Include="Common\" />
     <Folder Include="Components\PostProcess\" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cd $(TargetDir)&#xD;&#xA;cd ..&#xD;&#xA;dir /o-D /b *.nupkg &gt; nupkg.txt&#xD;&#xA;set /p NUPKG=&lt;nupkg.txt&#xD;&#xA;nuget add %25NUPKG%25 -Source \\nas\repos\nuget&#xD;&#xA;" />
+  </Target>
 
 </Project>
