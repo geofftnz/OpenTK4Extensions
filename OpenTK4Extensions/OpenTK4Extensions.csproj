@@ -8,6 +8,7 @@
     <Description>A collection of extensions for OpenTK4. Somewhat inspired by, and a poor cousin to, XNA. Used for my personal projects.</Description>
     <Copyright>©2013-2020 Geoff Thornburrow</Copyright>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -31,7 +32,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd $(TargetDir)&#xD;&#xA;cd ..&#xD;&#xA;dir /o-D /b *.nupkg &gt; nupkg.txt&#xD;&#xA;set /p NUPKG=&lt;nupkg.txt&#xD;&#xA;nuget add %25NUPKG%25 -Source \\nas\repos\nuget&#xD;&#xA;" />
+    <Exec Command="cd $(TargetDir)&#xD;&#xA;cd ..&#xD;&#xA;dir /o-D /b *.nupkg &gt; nupkg.txt&#xD;&#xA;set /p NUPKG=&lt;nupkg.txt&#xD;&#xA;nuget add %25NUPKG%25 -Source \\nas\repos\nuget&#xD;&#xA;echo &quot;added %25NUPKG%25&quot;" />
   </Target>
 
 </Project>

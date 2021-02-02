@@ -32,12 +32,12 @@ namespace OpenTKExtensions.Components
 
         private TextManager textManager;
 
-        private TextBlock textBlock = new TextBlock("fps", "", new Vector3(0.01f, 0.05f, 0.0f), 0.0003f, new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+        private TextBlock textBlock = new TextBlock("fps", "", new Vector3(0.01f, 0.05f, 0.0f), 0.0006f, new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
         public TextBlock TextBlock
         {
             get
             {
-                textBlock.Text = string.Format("{0:0.0}", FPS);
+                textBlock.Text = string.Format("{0:0}", FPS);
                 return textBlock;
             }
         }

@@ -7,7 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Shaders\operatorcomponenttest.frag.glsl" />
+    <None Remove="Resources\Shaders\operatorcomponenttest.vert.glsl" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\OpenTK4Extensions\OpenTK4Extensions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Shaders\operatorcomponenttest.vert.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Shaders\operatorcomponenttest.frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

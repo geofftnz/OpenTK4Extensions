@@ -83,6 +83,7 @@ namespace HelloWorldGL
 
             //GL.DrawArrays(PrimitiveType.Triangles, 0, indexBuffer.Length);
             GL.DrawElements(BeginMode.Triangles, indexBuffer.Length, DrawElementsType.UnsignedInt, 0);
+            
         }
 
         public void Reload()

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Numerics;
+using OpenTK.Mathematics;
 
 namespace OpenTKExtensions.Framework
 {
@@ -33,19 +33,21 @@ namespace OpenTKExtensions.Framework
 
         public OperatorComponentBase(bool usingFilenames = true, params Tuple<ShaderType, string>[] shaderSourceOrFilenames)
         {
-            // vertices for OpenGL coordinate space and an identity projection.
             Vector3[] vertex = {
                                     new Vector3(-1f,1f,0f),
                                     new Vector3(-1f,-1f,0f),
                                     new Vector3(1f,1f,0f),
                                     new Vector3(1f,-1f,0f)
                                 };
-            Resources.Add(VertexBuffer = vertex.ToBufferObject("vertex"));
 
             uint[] index = {
                                 0,1,2,
                                 1,3,2
                             };
+
+            // vertices for OpenGL coordinate space and an identity projection.
+            Resources.Add(VertexBuffer = vertex.ToBufferObject("vertex"));
+
             Resources.Add(IndexBuffer = index.ToBufferObject("index", BufferTarget.ElementArrayBuffer));
 
             if (shaderSourceOrFilenames != null && shaderSourceOrFilenames.Length > 0)
@@ -72,7 +74,9 @@ namespace OpenTKExtensions.Framework
 
             VertexBuffer.Bind(Shader.Resource.VariableLocations["vertex"]);
             IndexBuffer.Bind();
-            GL.DrawElements(BeginMode.Triangles, IndexBuffer.Length, DrawElementsType.UnsignedInt, 0);
+
+            GL.DrawElements(PrimitiveType.Triangles, IndexBuffer.Length, DrawElementsType.UnsignedInt, 0);
+
         }
 
 
