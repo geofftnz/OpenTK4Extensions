@@ -12,6 +12,9 @@ namespace OpenTKExtensions.Input
 {
     public class KeyboardActionManager : GameComponentBase, IKeyboardControllable
     {
+
+        public KeyModifiers ModifierMask { get; set; } = KeyModifiers.Alt | KeyModifiers.Shift | KeyModifiers.Control;
+
         private Dictionary<Keys, List<Tuple<KeyModifiers, Action>>> keymap = new Dictionary<Keys, List<Tuple<KeyModifiers, Action>>>();
 
         public KeyboardActionManager()
@@ -28,7 +31,7 @@ namespace OpenTKExtensions.Input
                 {
                     foreach (var maction in actions)
                     {
-                        if (keyModifiers == maction.Item1)
+                        if ((keyModifiers & ModifierMask) == maction.Item1)
                             maction.Item2();
                     }
                 }
