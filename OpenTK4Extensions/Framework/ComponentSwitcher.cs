@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using OpenTK.Input;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
+using OpenTKExtensions.Input;
 
 namespace OpenTKExtensions.Framework
 {
@@ -12,6 +14,11 @@ namespace OpenTKExtensions.Framework
         public bool SendKeypressesToInvisibleComponents { get; set; } = false;
 
         private int currentComponentIndex = -1;
+
+
+        public KeySpec KeyForward { get; set; } = new KeySpec(Keys.Tab);
+        public KeySpec KeyBackward { get; set; } = new KeySpec(Keys.Tab, KeyModifiers.Shift);
+
 
         public int CurrentComponentIndex
         {
@@ -36,7 +43,7 @@ namespace OpenTKExtensions.Framework
 
         private void UpdateVisible()
         {
-            for(int i = 0; i < Components.Count; i++)
+            for (int i = 0; i < Components.Count; i++)
             {
                 var c = (Components[i] as IRenderable);
                 if (c != null)
@@ -56,13 +63,31 @@ namespace OpenTKExtensions.Framework
 
         public ComponentSwitcher() : base()
         {
-
         }
 
 
 
         public override bool ProcessKeyDown(KeyboardKeyEventArgs e)
         {
+            // switching
+            if (e.Key == KeyForward.Key && (KeyForward.Modifiers == 0 || (e.Modifiers & KeyForward.Modifiers) != 0))
+            {
+                if (Components.Count > 1)
+                {
+                    currentComponentIndex++;
+                    currentComponentIndex %= Components.Count;
+                }
+            }
+
+            if (e.Key == KeyBackward.Key && (KeyBackward.Modifiers == 0 || (e.Modifiers & KeyBackward.Modifiers) != 0))
+            {
+                if (Components.Count > 1)
+                {
+                    currentComponentIndex += (Components.Count - 1);
+                    currentComponentIndex %= Components.Count;
+                }
+            }
+
             if (SendKeypressesToInvisibleComponents)
                 return base.ProcessKeyDown(e);
 

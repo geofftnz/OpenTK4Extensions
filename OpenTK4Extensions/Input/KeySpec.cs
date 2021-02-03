@@ -21,6 +21,10 @@ namespace OpenTKExtensions.Input
             Key = _key;
             Modifiers = _modifiers;
         }
+        public KeySpec(Keys _key) : this(_key, (KeyModifiers)0)
+        {
+
+        }
 
         public int CompareTo(KeySpec other)
         {
