@@ -37,12 +37,12 @@ namespace OpenTKExtensions.Framework
             Components.Unload();
         }
 
-        public void Add(IGameComponent component)
+        public virtual void Add(IGameComponent component)
         {
             Components.Add(component);
         }
 
-        public void Remove(IGameComponent component)
+        public virtual void Remove(IGameComponent component)
         {
             Components.Remove(component);
         }
