@@ -9,16 +9,11 @@ using OpenTKExtensions.Framework;
 
 namespace OpenTKExtensions.Text
 {
-    public class TextManager : GameComponentBase, IRenderable, IResizeable
+    public class TextManager : CompositeGameComponent, IRenderable, IResizeable, IUpdateable
     {
         public string Name { get; set; }
-        public Font Font { get; set; }
+        public TextRenderer Renderer { get; private set; }
         public bool NeedsRefresh { get; private set; }
-        public bool Visible { get; set; }
-        public int DrawOrder { get; set; }
-        public Matrix4 Projection { get; set; }
-        public Matrix4 Modelview { get; set; }
-        public bool AutoTransform { get; set; }
 
         Dictionary<string, TextBlock> blocks = new Dictionary<string, TextBlock>();
         public Dictionary<string, TextBlock> Blocks { get { return blocks; } }
@@ -26,19 +21,11 @@ namespace OpenTKExtensions.Text
         public TextManager(string name, Font font)
         {
             Name = name;
-            Font = font;
             NeedsRefresh = false;
             Visible = true;
             DrawOrder = int.MaxValue;
-            AutoTransform = false;
-            Projection = Matrix4.Identity;
-            Modelview = Matrix4.Identity;
-        }
 
-        public TextManager()
-            : this("unnamed", null)
-        {
-
+            this.Components.Add(Renderer = new TextRenderer(font));
         }
 
         public void Clear()
@@ -51,7 +38,6 @@ namespace OpenTKExtensions.Text
         {
             if (!Blocks.ContainsKey(b.Name))
             {
-                //LogTrace($"TextManager.Add ({Name}): Adding \"{b.Text}\"");
                 Blocks.Add(b.Name, b);
                 NeedsRefresh = true;
                 return true;
@@ -101,57 +87,33 @@ namespace OpenTKExtensions.Text
         {
             //LogTrace($"({Name}): Refreshing {Blocks.Count} blocks...");
 
-            if (Font == null)
+            if (Renderer == null)
             {
                 LogWarn($"({Name}): Font not specified so bailing out.");
                 return;
             }
 
             // refresh character arrays
-            Font.Clear();
+            Renderer.Clear();
 
             foreach (var b in Blocks.Values)
             {
-                Font.AddString(b.Text, b.Position, b.Size, b.Colour);
+                Renderer.AddString(b.Text, b.Position, b.Size, b.Colour);
             }
 
-            Font.Refresh();
+            Renderer.Refresh();
             NeedsRefresh = false;
         }
 
-        public void Render(IFrameRenderData frameData)
+        public override void Render(IFrameRenderData frameData)
         {
-            Render();
-        }
-        public void Render()
-        {
-            if (Font == null)
-            {
-                LogWarn($"({Name}): Font not specified so bailing out.");
-                return;
-            }
-
             if (NeedsRefresh)
             {
                 Refresh();
             }
 
-            Font.Render(Projection, Modelview);
+            base.Render(frameData);
         }
 
-
-        public void Resize(int width, int height)
-        {
-            if (height > 0)
-            {
-                Projection = Matrix4.CreateOrthographicOffCenter(0.0f, (float)width / (float)height, 1.0f, 0.0f, 0.001f, 10.0f);
-                Modelview = Matrix4.Identity * Matrix4.CreateTranslation(0.0f, 0.0f, -1.0f);
-            }
-            else
-            {
-                Projection = Modelview = Matrix4.Identity;
-            }
-            
-        }
     }
 }

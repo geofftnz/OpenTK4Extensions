@@ -73,7 +73,7 @@ namespace HelloWorldGL
 
             components.Add(font = new Font("Resources/Fonts/consolab.ttf_sdf_512.png", "Resources/Fonts/consolab.ttf_sdf_512.txt"));
 
-            /*
+            
 
             components.Add(renderTarget = new RenderTargetBase(false, false, 512, 512) { DrawOrder = 1 });
             renderTarget.Loading += (s, e) =>
@@ -86,11 +86,11 @@ namespace HelloWorldGL
 
             components.Add(testcomp1 = new TestComponent() { DrawOrder = 2 });
             testcomp1.PreRender += (s, e) => { testcomp1.tex2 = renderTarget.GetTexture(0); };
-            */
+            
 
-            components.Add(new OperatorComponentTest());
+            //components.Add(new OperatorComponentTest());
 
-            components.Add(new FrameCounter(font) { DrawOrder = 3 });
+            components.Add(new FrameCounter(font) {LoadOrder = 2, DrawOrder = 3 });
 
             timer.Start();
         }
