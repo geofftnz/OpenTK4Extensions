@@ -47,7 +47,7 @@ namespace HelloWorldGL
         public TestBench() : base(GameWindowSettings.Default, new NativeWindowSettings
         {
             Size = new Vector2i(800, 600),
-            APIVersion = new Version(4, 6),
+            APIVersion = new Version(4, 5),
             API = OpenTK.Windowing.Common.ContextAPI.OpenGL,
             Profile = ContextProfile.Compatability,
             Flags = ContextFlags.Default
