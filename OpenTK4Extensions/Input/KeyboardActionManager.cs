@@ -15,14 +15,26 @@ namespace OpenTKExtensions.Input
 
         public KeyModifiers ModifierMask { get; set; } = KeyModifiers.Alt | KeyModifiers.Shift | KeyModifiers.Control;
 
+        /// <summary>
+        /// When true, will return true to process key calls when the key is bound to an action, preventing further processing of this key
+        /// </summary>
+        public bool CaptureBoundKeypresses { get; set; } = false;
+
+        /// <summary>
+        /// When true, will return true to all process key calls, preventing further processing of all keys
+        /// </summary>
+        public bool CaptureAllKeypresses { get; set; } = false;
+
         private Dictionary<Keys, List<Tuple<KeyModifiers, Action>>> keymap = new Dictionary<Keys, List<Tuple<KeyModifiers, Action>>>();
 
         public KeyboardActionManager()
         {
         }
 
-        public void ProcessKeyDown(Keys key, KeyModifiers keyModifiers)
+        public bool ProcessKeyDown(Keys key, KeyModifiers keyModifiers)
         {
+            bool processed = false;
+
             List<Tuple<KeyModifiers, Action>> actions;
             lock (keymap)
             {
@@ -32,10 +44,14 @@ namespace OpenTKExtensions.Input
                     foreach (var maction in actions)
                     {
                         if ((keyModifiers & ModifierMask) == maction.Item1)
+                        {
                             maction.Item2();
+                            processed = true;
+                        }
                     }
                 }
             }
+            return processed;
         }
 
         public void Add(Keys key, KeyModifiers modifiers, Action action)
@@ -54,15 +70,28 @@ namespace OpenTKExtensions.Input
             }
         }
 
+        public void Add(KeySpec keySpec, Action action)
+        {
+            Add(keySpec.Key, keySpec.Modifiers, action);
+        }
+
+        public void Clear()
+        {
+            lock (keymap)
+            {
+                keymap.Clear();
+            }
+        }
+
         public bool ProcessKeyDown(KeyboardKeyEventArgs e)
         {
-            ProcessKeyDown(e.Key, e.Modifiers);
-            return false;
+            bool processed = ProcessKeyDown(e.Key, e.Modifiers);
+            return CaptureAllKeypresses || (processed & CaptureBoundKeypresses);
         }
 
         public bool ProcessKeyUp(KeyboardKeyEventArgs e)
         {
-            return false;
+            return CaptureAllKeypresses;
         }
 
         public int Count
