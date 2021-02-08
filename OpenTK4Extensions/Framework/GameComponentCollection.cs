@@ -80,6 +80,12 @@ namespace OpenTKExtensions.Framework
             Add(component);
         }
 
+        /// <summary>
+        /// Process keydown for components in order of KeyboardPriority.
+        /// If any component returns true from ProcessKeyDown, processing will stop
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public bool ProcessKeyDown(OpenTK.Windowing.Common.KeyboardKeyEventArgs e)
         {
             foreach (var component in this.OfType<IKeyboardControllable>().OrderBy(c => c.KeyboardPriority))
@@ -90,6 +96,12 @@ namespace OpenTKExtensions.Framework
             return false;
         }
 
+        /// <summary>
+        /// Process keyup for components in order of KeyboardPriority.
+        /// If any component returns true from ProcessKeyUp, processing will stop
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public bool ProcessKeyUp(OpenTK.Windowing.Common.KeyboardKeyEventArgs e)
         {
             foreach (var component in this.OfType<IKeyboardControllable>().OrderBy(c => c.KeyboardPriority))

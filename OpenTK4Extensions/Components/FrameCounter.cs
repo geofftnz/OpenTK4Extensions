@@ -10,7 +10,7 @@ using OpenTK.Mathematics;
 
 namespace OpenTKExtensions.Components
 {
-    public class FrameCounter : CompositeGameComponent, IRenderable
+    public class FrameCounter : CompositeGameComponent, IRenderable, IResizeable
     {
         const int BUFLEN = 30;
         private Stopwatch sw = new Stopwatch();
@@ -32,7 +32,7 @@ namespace OpenTKExtensions.Components
 
         private TextManager textManager;
 
-        private TextBlock textBlock = new TextBlock("fps", "", new Vector3(0.01f, 0.05f, 0.0f), 0.0006f, new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+        private TextBlock textBlock = new TextBlock("fps", "", new Vector3(0.01f, 0.06f, 0.0f), 0.001f, new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
         public TextBlock TextBlock
         {
             get
@@ -132,8 +132,8 @@ namespace OpenTKExtensions.Components
         {
             this.Frame();
             textManager.AddOrUpdate(this.TextBlock);
-            textManager.Render(frameData);
 
+            base.Render(frameData);
         }
 
 

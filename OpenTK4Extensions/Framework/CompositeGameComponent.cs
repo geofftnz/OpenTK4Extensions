@@ -64,7 +64,10 @@ namespace OpenTKExtensions.Framework
 
         public virtual void Render(IFrameRenderData frameData)
         {
-            Components.Render(frameData);
+            if (Visible)
+            {
+                Components.Render(frameData);
+            }
         }
 
         public virtual bool ProcessKeyDown(KeyboardKeyEventArgs e)
