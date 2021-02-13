@@ -29,7 +29,61 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
+    <Folder Include="Components\ParticleSystem\Targets\" />
+    <Folder Include="Components\ParticleSystem\Renderers\" />
+    <Folder Include="Components\ParticleSystem\Operators\" />
     <Folder Include="Components\PostProcess\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Components\ParticleSystem\Shaders\Common\hg_sdf.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\Common\Noise\noise2d.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\Common\Noise\noise3d.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\Common\Noise\noise4d.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\operator_test.frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\operator_test.vert.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\particles.frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\particles.vert.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\particles_col.frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\particles_col.vert.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\postprocess.frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\postprocess.vert.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\posvelcol_operator.frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\posvelcol_operator.vert.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\raymarch_operator.frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\ParticleSystem\Shaders\raymarch_operator.vert.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
