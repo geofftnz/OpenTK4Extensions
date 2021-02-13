@@ -30,18 +30,20 @@ namespace OpenTKExtensions.Components.ParticleSystem.Renderers
         protected BufferObject<uint> indexVBO;
         protected ReloadableResource<ShaderProgram> program;
 
-        protected string VertexShaderName = "particles_col.vert.glsl";
-        protected string FragmentShaderName = "particles_col.frag.glsl";
+        protected string VertexShaderName;// = "particles_col.vert.glsl";
+        protected string FragmentShaderName;// = "particles_col.frag.glsl";
 
         protected int width;
         protected int height;
 
         protected float screenWidth = 800.0f;
 
-        public ColourParticleRenderer(int width = 256, int height = 256)
+        public ColourParticleRenderer(string vsfilename, string fsfilename, int width = 256, int height = 256)
         {
             this.width = width;
             this.height = height;
+            this.VertexShaderName = vsfilename;
+            this.FragmentShaderName = fsfilename;
 
             Loading += ColourParticleRenderer_Loading;
             Unloading += ColourParticleRenderer_Unloading;
