@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "IncrementVersion/1.0.0": {
+        "runtime": {
+          "IncrementVersion.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "IncrementVersion/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
