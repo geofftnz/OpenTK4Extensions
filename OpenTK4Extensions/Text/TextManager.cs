@@ -9,7 +9,7 @@ using OpenTKExtensions.Framework;
 
 namespace OpenTKExtensions.Text
 {
-    public class TextManager : CompositeGameComponent, IRenderable, IResizeable, IUpdateable
+    public class TextManager : CompositeGameComponent, IRenderable, IResizeable, IUpdateable, ITransformable
     {
         public string Name { get; set; }
         public TextRenderer Renderer { get; private set; }
@@ -17,6 +17,10 @@ namespace OpenTKExtensions.Text
 
         Dictionary<string, TextBlock> blocks = new Dictionary<string, TextBlock>();
         public Dictionary<string, TextBlock> Blocks { get { return blocks; } }
+
+        public Matrix4 ViewMatrix { get => Renderer.ViewMatrix; set => Renderer.ViewMatrix = value; }
+        public Matrix4 ModelMatrix { get => Renderer.ModelMatrix; set => Renderer.ModelMatrix = value; }
+        public Matrix4 ProjectionMatrix { get => Renderer.ProjectionMatrix; set => Renderer.ProjectionMatrix = value; }
 
         public TextManager(string name, Font font)
         {
