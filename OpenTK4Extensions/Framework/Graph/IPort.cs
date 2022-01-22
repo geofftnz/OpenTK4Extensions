@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenTKExtensions.Framework
+namespace OpenTKExtensions.Framework.Graph
 {
     /// <summary>
-    /// Represents an input/output port to an effect.
-    /// 
-    /// 
-    /// 
+    /// Represents a single input or output in a render node.
     /// </summary>
+    public interface IPort
+    {
+        object Value { get; set; }
+    }
+
+    /*
     public interface IEffectPort
     {
         string Name { get; }
@@ -27,5 +30,5 @@ namespace OpenTKExtensions.Framework
     {
         T Value { get; }
     }
-
+    */
 }
