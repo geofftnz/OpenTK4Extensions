@@ -11,24 +11,10 @@ namespace OpenTKExtensions.Framework.Graph
     /// </summary>
     public interface IPort
     {
-        object Value { get; set; }
-    }
-
-    /*
-    public interface IEffectPort
-    {
         string Name { get; }
+        // type
+        Type PortType { get; }
 
-        object Value { get; }
-
-        bool IsSet { get; }
-
-        void Reset();
+        bool CanBindWith(IPort other) => this.PortType == other.PortType;
     }
-
-    public interface IEffectPort<T>
-    {
-        T Value { get; }
-    }
-    */
 }

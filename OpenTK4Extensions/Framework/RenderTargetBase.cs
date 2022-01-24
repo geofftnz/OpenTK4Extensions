@@ -61,7 +61,7 @@ namespace OpenTKExtensions.Framework
             OutputBuffer.ClearAllColourBuffers(new Vector4(0f));
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.DepthTest);
-
+            
             Components.Render(frameData);
 
             OutputBuffer.UnbindFromWriting();

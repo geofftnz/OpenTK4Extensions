@@ -20,9 +20,9 @@ namespace OpenTKExtensions.Framework.Graph
     {
         string Name { get; }
 
-        IReadOnlyList<IPort> Input { get; }
+        IReadOnlyDictionary<string, IInputPort> Input { get; }
 
-        IReadOnlyList<IPort> Output { get; }
+        IReadOnlyDictionary<string, IOutputPort> Output { get; }
 
         /// <summary>
         /// This node is the root node of this render graph.

@@ -9,10 +9,10 @@ namespace OpenTKExtensions.Framework.Graph
     public class GraphEdge
     {
         public IRenderGraphNode FromNode { get; set; }
-        public int FromPort { get; set; }
+        public string FromPort { get; set; }
 
         public IRenderGraphNode ToNode { get; set; }
-        public int ToPort { get; set; }
+        public string ToPort { get; set; }
 
         public override bool Equals(object obj)
         {

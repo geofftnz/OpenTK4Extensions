@@ -64,19 +64,25 @@ namespace OpenTKExtensions.Framework.Graph
             var toNode = nodeMap[to.Node];
 
             // check ports
-            if (from.Port < 0 || from.Port >= fromNode.Output.Count)
+            if (!fromNode.Output.ContainsKey(from.Port))
             {
-                throw new ArgumentException($"Port {from.Port} is out of range for node {from.Node}. Valid range: 0-{fromNode.Output.Count - 1}");
+                throw new ArgumentException($"Output port {from.Port} is not present on source node.");
             }
-            if (to.Port < 0 || to.Port >= toNode.Input.Count)
+            if (!toNode.Input.ContainsKey(to.Port))
             {
-                throw new ArgumentException($"Port {to.Port} is out of range for node {to.Node}. Valid range: 0-{toNode.Input.Count - 1}");
+                throw new ArgumentException($"Input port {to.Port} is not present on target node.");
+            }
+
+            // check port compatibility
+            if (!fromNode.Output[from.Port].CanBindWith(toNode.Input[to.Port]))
+            {
+                throw new ArgumentException($"Ports are not compatible.");
             }
 
             // make sure we don't already have this edge
             if (GraphEdges.Any(e => e.FromNode == fromNode && e.FromPort == from.Port && e.ToNode == toNode && e.ToPort == to.Port))
             {
-                throw new ArgumentException("Edge already exists");
+                throw new ArgumentException("Edge already exists.");
             }
 
             GraphEdges.Add(new GraphEdge { FromNode = fromNode, FromPort = from.Port, ToNode = toNode, ToPort = to.Port });
@@ -104,8 +110,6 @@ namespace OpenTKExtensions.Framework.Graph
             Components.Do<IRenderGraphNode>(n => n.HasRendered = false);
 
             RenderNode(rootNode, frameData);
-
-            //base.Render(frameData);
         }
 
         protected void RenderNode(IRenderGraphNode node, IFrameRenderData frameData)

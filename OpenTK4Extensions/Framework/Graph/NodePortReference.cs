@@ -9,7 +9,7 @@ namespace OpenTKExtensions.Framework.Graph
     public class NodePortReference
     {
         public string Node;
-        public int Port;
+        public string Port;
 
         public override bool Equals(object obj)
         {
