@@ -114,6 +114,9 @@ namespace OpenTKExtensions.Framework.Graph
 
         protected void RenderNode(IRenderGraphNode node, IFrameRenderData frameData)
         {
+            if (node == null)
+                return;
+
             // ensure dependencies are rendered
             foreach (var edge in GraphEdges.Where(e => e.ToNode == node))
             {

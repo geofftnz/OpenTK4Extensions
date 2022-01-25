@@ -83,7 +83,7 @@ namespace OpenTKExtensions.Resources
             {
                 Texture.Unload();
                 Texture = null;
-                Enabled = false;
+                //Enabled = false;  // TODO: bug here? we should not be disabling the slot if we're unloading
             }
         }
         public void AttachToFramebuffer(FramebufferTarget target)

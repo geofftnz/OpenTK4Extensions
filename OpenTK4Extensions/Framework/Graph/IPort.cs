@@ -12,6 +12,8 @@ namespace OpenTKExtensions.Framework.Graph
     public interface IPort
     {
         string Name { get; }
+
+        public object Value { get; set; }
         // type
         Type PortType { get; }
 

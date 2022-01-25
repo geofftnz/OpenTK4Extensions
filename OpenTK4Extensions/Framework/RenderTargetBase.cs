@@ -21,7 +21,7 @@ namespace OpenTKExtensions.Framework
         public bool InheritSizeFromParent { get; set; } = false;
 
         //TODO: Should this be an event?
-        public Action<IRenderTarget> SetBuffers { get; set; } = null;
+        public Action<IRenderTarget> SetBuffers { get; set; }
 
         public RenderTargetBase(bool wantDepth = false, bool inheritSize = false, int width = 256, int height = 256)
         {
@@ -57,7 +57,6 @@ namespace OpenTKExtensions.Framework
             SetBuffers?.Invoke(this);
 
             OutputBuffer.BindForWritingMulti();
-            //OutputBuffer.ClearColourBuffer(0, new Vector4(0f));
             OutputBuffer.ClearAllColourBuffers(new Vector4(0f));
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.DepthTest);
