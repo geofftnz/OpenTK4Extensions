@@ -19,6 +19,7 @@ namespace OpenTKExtensions.Components.ParticleSystem.Renderers
     {
         public int DrawOrder { get; set; } = 0;
         public bool Visible { get; set; } = true;
+        public bool IsFinalOutput { get; set; } = true;
         public Matrix4 ViewMatrix { get; set; } = Matrix4.Identity;
         public Matrix4 ModelMatrix { get; set; } = Matrix4.Identity;
         public Matrix4 ProjectionMatrix { get; set; } = Matrix4.Identity;
@@ -93,8 +94,11 @@ namespace OpenTKExtensions.Components.ParticleSystem.Renderers
 
         }
 
-        public void Render(IFrameRenderData frameData)
+        public void Render(IFrameRenderData frameData, IFrameBufferTarget target = null)
         {
+            target?.BindForWriting();
+            target?.ClearAllColourBuffers(Vector4.Zero);
+
             GL.Disable(EnableCap.DepthTest);
             GL.Enable(EnableCap.ProgramPointSize);
             GL.PointParameter(PointParameterName.PointSpriteCoordOrigin, (int)PointSpriteCoordOriginParameter.UpperLeft);
@@ -117,6 +121,7 @@ namespace OpenTKExtensions.Components.ParticleSystem.Renderers
             indexVBO.Bind();
             GL.DrawElements(BeginMode.Points, indexVBO.Length, DrawElementsType.UnsignedInt, 0);
 
+            target?.UnbindFromWriting();
         }
 
         public void Resize(int width, int height)

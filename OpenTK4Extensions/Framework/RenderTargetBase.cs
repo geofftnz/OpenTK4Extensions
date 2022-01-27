@@ -15,7 +15,7 @@ namespace OpenTKExtensions.Framework
     /// <summary>
     /// Base class for an "operator" component: one that renders to one or more render targets. 
     /// </summary>
-    public class RenderTargetBase : CompositeGameComponent, IGameComponent, IRenderable, IResizeable, IReloadable, IRenderTarget
+    public class RenderTargetBase : CompositeGameComponent, IGameComponent, IRenderable, IResizeable, IReloadable, IRenderTarget, IFrameBufferTarget
     {
         protected GBuffer OutputBuffer;
         public bool InheritSizeFromParent { get; set; } = false;
@@ -52,18 +52,19 @@ namespace OpenTKExtensions.Framework
             return OutputBuffer.GetTextureAtSlot(slot);
         }
 
-        public override void Render(IFrameRenderData frameData)
+        public override void Render(IFrameRenderData frameData, IFrameBufferTarget target)
         {
-            SetBuffers?.Invoke(this);
+            if (target != null)
+            {
+                throw new InvalidOperationException($"A {GetType().Name} cannot be rendered to a target.");
+            }
 
-            OutputBuffer.BindForWritingMulti();
-            OutputBuffer.ClearAllColourBuffers(new Vector4(0f));
+            SetBuffers?.Invoke(this);  //TODO: this might be in the wrong place now.
+
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.DepthTest);
-            
-            Components.Render(frameData);
 
-            OutputBuffer.UnbindFromWriting();
+            Components.RenderToTarget(frameData, OutputBuffer);
         }
 
         public override void Resize(int width, int height)
@@ -73,5 +74,13 @@ namespace OpenTKExtensions.Framework
                 OutputBuffer?.Resize(width, height);
             }
         }
+
+        public void BindForWriting() => OutputBuffer.BindForWriting();
+
+        public void ClearAllColourBuffers(Vector4 colour) => OutputBuffer.ClearAllColourBuffers(colour);
+
+        public void ClearColourBuffer(int drawBuffer, Vector4 colour) => OutputBuffer.ClearColourBuffer(drawBuffer, colour);
+
+        public void UnbindFromWriting() => OutputBuffer.UnbindFromWriting();
     }
 }

@@ -19,6 +19,7 @@ namespace OpenTKExtensions.Framework
     {
         public int DrawOrder { get; set; }
         public bool Visible { get; set; } = true;
+        public bool IsFinalOutput { get; set; } = true;
 
         public Action TextureBinds { get; set; }
         public Action<ShaderProgram> SetShaderUniforms { get; set; }
@@ -60,6 +61,16 @@ namespace OpenTKExtensions.Framework
 
         public OperatorComponentBase(string vertexShader, string fragmentShader) : this(true, new Tuple<ShaderType, string>(ShaderType.VertexShader, vertexShader), new Tuple<ShaderType, string>(ShaderType.FragmentShader, fragmentShader))
         {
+        }
+
+        public virtual void Render(IFrameRenderData frameData, IFrameBufferTarget target = null)
+        {
+            target?.BindForWriting();
+            target?.ClearAllColourBuffers(Vector4.Zero);
+
+            Render(frameData);
+
+            target?.UnbindFromWriting();
         }
 
         public virtual void Render(IFrameRenderData frameData)

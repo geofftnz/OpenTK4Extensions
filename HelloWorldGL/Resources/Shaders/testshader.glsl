@@ -26,7 +26,10 @@ void main(void)
 	vec2 p = (pos.xy*vec2(0.5,-0.5)+0.5);
 	vec4 t1 = texture(tex1,p).rgba;
 	vec4 t2 = vec4(0.0);
-	t2 = texture(tex_new,p).rgba;
+
+	if (p.x>p.y){
+		t2 = texture(tex_new,p).rgba;
+	}
 
 	vec3 col = vec3(0.5) + pos * 0.5;
 

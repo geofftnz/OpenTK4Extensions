@@ -28,6 +28,7 @@ namespace OpenTKExtensions.Framework.Graph
         public OutputNodeBase() : base()
         {
             IsRoot = true;
+            IsFinalOutput = true;
             _inputProxy = new DictionaryProxy<string, IPort, GraphNodePort>(_input);
             _outputProxy = new DictionaryProxy<string, IPort, GraphNodePort>(_output);
         }
@@ -36,12 +37,12 @@ namespace OpenTKExtensions.Framework.Graph
 
         protected abstract void AssignOutputs();
 
-        public override void Render(IFrameRenderData frameData)
+        public override void Render(IFrameRenderData frameData, IFrameBufferTarget target = null)
         {
             // get inputs
             AssignInputs();
 
-            base.Render(frameData);
+            base.Render(frameData, target);
 
             // set outputs
             AssignOutputs();

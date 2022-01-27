@@ -2,6 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
+using OpenTKExtensions.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace OpenTKExtensions.Resources
     /// <summary>
     /// GBuffer - a framebuffer & collection of textures used for render-to-texture and MRT.
     /// </summary>
-    public class GBuffer : ResourceBase, IResource
+    public class GBuffer : ResourceBase, IResource, IFrameBufferTarget
     {
         public const int MAXSLOTS = 16;
 
@@ -233,7 +234,8 @@ namespace OpenTKExtensions.Resources
             GL.Viewport(previousViewport[0], previousViewport[1], previousViewport[2], previousViewport[3]);
         }
 
-        public void BindForWriting()
+        [Obsolete("Use BindForWriting()")]
+        public void BindForWriting_Old()
         {
             SaveViewport();
             FBO.Bind(FramebufferTarget.DrawFramebuffer);
@@ -246,9 +248,14 @@ namespace OpenTKExtensions.Resources
             }
         }
 
-        public void BindForWritingMulti()
+        public void BindForWriting()
         {
             BindForWritingTo(TextureSlots.Where(s => s.Enabled).ToArray());
+            if (WantDepth)
+            {
+                GL.Enable(EnableCap.DepthTest);
+                GL.DepthMask(true);
+            }
         }
 
         /// <summary>

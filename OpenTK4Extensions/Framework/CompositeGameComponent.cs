@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using OpenTK.Input;
 using OpenTK.Windowing.Common;
+using OpenTKExtensions.Resources;
 
 namespace OpenTKExtensions.Framework
 {
@@ -17,6 +18,7 @@ namespace OpenTKExtensions.Framework
 
         public bool Visible { get; set; } = true;
         public int DrawOrder { get; set; } = 0;
+        public bool IsFinalOutput { get; set; } = false; //TODO: Is this even defined for composites?
 
         public int KeyboardPriority { get; set; } = 0;
 
@@ -62,11 +64,18 @@ namespace OpenTKExtensions.Framework
             Components.Update(frameData);
         }
 
-        public virtual void Render(IFrameRenderData frameData)
+        public virtual void Render(IFrameRenderData frameData, IFrameBufferTarget target = null)
         {
             if (Visible)
             {
-                Components.Render(frameData);
+                if (target == null)
+                {
+                    Components.Render(frameData);
+                }
+                else
+                {
+                    Components.RenderToTarget(frameData, target);
+                }
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using OpenTKExtensions.Common;
+using OpenTKExtensions.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,12 +35,16 @@ namespace OpenTKExtensions.Framework.Graph
         protected abstract void AssignInputs();
         protected abstract void AssignOutputs();
 
-        public override void Render(IFrameRenderData frameData)
+        public override void Render(IFrameRenderData frameData, IFrameBufferTarget target)
         {
+            if (target != null)
+            {
+                throw new InvalidOperationException($"A {GetType().Name} cannot be rendered to a target.");
+            }
             // get inputs
             AssignInputs();
 
-            base.Render(frameData);
+            base.Render(frameData, null);
 
             // set outputs
             AssignOutputs();

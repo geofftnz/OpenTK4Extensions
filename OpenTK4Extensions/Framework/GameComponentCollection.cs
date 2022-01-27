@@ -1,6 +1,7 @@
 ﻿using NLog;
 using OpenTK;
 using OpenTK.Mathematics;
+using OpenTKExtensions.Resources;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -56,6 +57,33 @@ namespace OpenTKExtensions.Framework
                 component.Render(frameData);
                 (component as ITimedComponent)?.StopRenderTimer();
             }
+        }
+        public void RenderToTarget<F>(F frameData, IFrameBufferTarget target) where F : IFrameRenderData
+        {
+            foreach (var component in this.OfType<IRenderable>().Where(c => c.Visible && !c.IsFinalOutput).OrderBy(c => c.DrawOrder))
+            {
+                //LogTrace($"PreRender: {component.GetType().Name}");
+                component.OnPreRender();
+
+                //LogTrace($"Render: {component.GetType().Name}");
+                (component as ITimedComponent)?.StartRenderTimer();
+                component.Render(frameData);
+                (component as ITimedComponent)?.StopRenderTimer();
+            }
+
+            target.BindForWriting();
+            target.ClearAllColourBuffers(Vector4.Zero);
+            foreach (var component in this.OfType<IRenderable>().Where(c => c.Visible && c.IsFinalOutput).OrderBy(c => c.DrawOrder))
+            {
+                //LogTrace($"PreRender: {component.GetType().Name}");
+                component.OnPreRender();
+
+                //LogTrace($"Render: {component.GetType().Name}");
+                (component as ITimedComponent)?.StartRenderTimer();
+                component.Render(frameData);
+                (component as ITimedComponent)?.StopRenderTimer();
+            }
+            target.UnbindFromWriting();
         }
 
         public void Update<F>(F frameData) where F : IFrameUpdateData

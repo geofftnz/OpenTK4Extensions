@@ -66,6 +66,7 @@ namespace OpenTKExtensions.Text
         public Matrix4 ProjectionMatrix { get; set; }
         public bool Visible { get; set; } = true;
         public int DrawOrder { get; set; }
+        public bool IsFinalOutput { get; set; } = true;
 
         #region shaders
         private const string vertexShaderSource =
@@ -381,6 +382,16 @@ namespace OpenTKExtensions.Text
             return AddString(s, position.X, position.Y, position.Z, size, col);
         }
 
+
+        public void Render(IFrameRenderData frameData, IFrameBufferTarget target = null)
+        {
+            target?.BindForWriting();
+            target?.ClearAllColourBuffers(Vector4.Zero);
+
+            Render(frameData);
+
+            target?.UnbindFromWriting();
+        }
 
         public void Render(IFrameRenderData frameData) 
         {

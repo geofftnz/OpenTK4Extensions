@@ -17,6 +17,7 @@ namespace HelloWorldGL
         public Matrix4 ProjectionMatrix { get; set; } = Matrix4.Identity;
         public int DrawOrder { get; set; } = 0;
         public bool Visible { get; set; } = true;
+        public bool IsFinalOutput { get; set; } = true;
         public int Width { get; set; } = 256;
         public int Height { get; set; } = 256;
 
@@ -50,6 +51,16 @@ namespace HelloWorldGL
 
         }
 
+
+        public void Render(IFrameRenderData frameData, IFrameBufferTarget target = null)
+        {
+            target?.BindForWriting();
+            target?.ClearAllColourBuffers(Vector4.Zero);
+
+            Render(frameData);
+
+            target?.UnbindFromWriting();
+        }
 
         public void Render(IFrameRenderData frameData)
         {

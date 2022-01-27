@@ -6,6 +6,7 @@ using NLog;
 using OpenTK;
 using OpenTK.Mathematics;
 using OpenTKExtensions.Framework;
+using OpenTKExtensions.Resources;
 
 namespace OpenTKExtensions.Text
 {
@@ -28,6 +29,7 @@ namespace OpenTKExtensions.Text
             NeedsRefresh = false;
             Visible = true;
             DrawOrder = int.MaxValue;
+            IsFinalOutput = true;
 
             this.Components.Add(Renderer = new TextRenderer(font));
         }
@@ -109,14 +111,14 @@ namespace OpenTKExtensions.Text
             NeedsRefresh = false;
         }
 
-        public override void Render(IFrameRenderData frameData)
+        public override void Render(IFrameRenderData frameData, IFrameBufferTarget target = null)
         {
             if (NeedsRefresh)
             {
                 Refresh();
             }
 
-            base.Render(frameData);
+            base.Render(frameData, target);
         }
 
     }

@@ -7,6 +7,7 @@ using OpenTKExtensions.Framework;
 using OpenTKExtensions.Text;
 using OpenTK;
 using OpenTK.Mathematics;
+using OpenTKExtensions.Resources;
 
 namespace OpenTKExtensions.Components
 {
@@ -128,12 +129,12 @@ namespace OpenTKExtensions.Components
             this.fpsSmoothed = f * this.fpsLowpassAmount + (1.0 - this.fpsLowpassAmount) * this.fpsSmoothed;
         }
 
-        public override void Render(IFrameRenderData frameData)
+        public override void Render(IFrameRenderData frameData, IFrameBufferTarget target = null)
         {
             this.Frame();
             textManager.AddOrUpdate(this.TextBlock);
 
-            base.Render(frameData);
+            base.Render(frameData, target);
         }
 
 

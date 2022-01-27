@@ -56,6 +56,7 @@ namespace OpenTKExtensions.Framework
 
         public ComponentSwitcher() : base()
         {
+            IsFinalOutput = true;
         }
 
         public override bool ProcessKeyDown(KeyboardKeyEventArgs e)
@@ -100,9 +101,9 @@ namespace OpenTKExtensions.Framework
             }
         }
 
-        public override void Render(IFrameRenderData frameData)
+        public override void Render(IFrameRenderData frameData, IFrameBufferTarget target = null)
         {
-            (CurrentComponent as IRenderable)?.Render(frameData);
+            (CurrentComponent as IRenderable)?.Render(frameData, target);
         }
 
         public override void Add(IGameComponent component)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTKExtensions.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -104,15 +105,15 @@ namespace OpenTKExtensions.Framework.Graph
 
             base.Update(frameData);
         }
-        public override void Render(IFrameRenderData frameData)
+        public override void Render(IFrameRenderData frameData, IFrameBufferTarget target)
         {
             // clear render flags
             Components.Do<IRenderGraphNode>(n => n.HasRendered = false);
 
-            RenderNode(rootNode, frameData);
+            RenderNode(rootNode, frameData, target);
         }
 
-        protected void RenderNode(IRenderGraphNode node, IFrameRenderData frameData)
+        protected void RenderNode(IRenderGraphNode node, IFrameRenderData frameData, IFrameBufferTarget target)
         {
             if (node == null)
                 return;
@@ -122,15 +123,19 @@ namespace OpenTKExtensions.Framework.Graph
             {
                 if (!edge.FromNode.HasRendered)
                 {
-                    RenderNode(edge.FromNode, frameData);
+                    RenderNode(edge.FromNode, frameData, null);
                 }
 
                 // set input port
                 node.Input[edge.ToPort].Value = edge.FromNode.Output[edge.FromPort].Value;
             }
 
-            // render this node
-            node.Render(frameData);
+            // render this node - render target support is only for the root node.
+            target?.BindForWriting();
+            target?.ClearAllColourBuffers(OpenTK.Mathematics.Vector4.Zero);
+            node.Render(frameData, null);
+            target?.UnbindFromWriting();
+
             node.HasRendered = true;
 
         }
