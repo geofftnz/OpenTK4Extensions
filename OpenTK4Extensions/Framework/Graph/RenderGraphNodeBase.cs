@@ -9,9 +9,13 @@ using System.Threading.Tasks;
 
 namespace OpenTKExtensions.Framework.Graph
 {
-    public abstract class RenderGraphNodeBase : RenderTargetBase, IRenderGraphNode
+    public abstract class RenderGraphNodeBase : WrappedGameComponentBase, IRenderGraphNode, IRenderable, IResizeable, IReloadable
     {
+
         public string Name { get; set; }
+
+        public bool InheritSizeFromParent { get; set; } = false;
+        protected GBuffer OutputBuffer;
 
         protected Dictionary<string, GraphNodePort> _input { get; } = new();
         protected DictionaryProxy<string, IPort, GraphNodePort> _inputProxy;
@@ -22,33 +26,53 @@ namespace OpenTKExtensions.Framework.Graph
         protected DictionaryProxy<string, IPort, GraphNodePort> _outputProxy;
         public IReadOnlyDictionary<string, IPort> Output => _outputProxy;
 
-        public bool IsRoot { get; protected set; }
+        public bool IsRoot { get; set; }
 
         public bool HasRendered { get; set; }
 
-        public RenderGraphNodeBase(bool wantDepth = false, bool inheritSize = false, int width = 256, int height = 256) : base(wantDepth, inheritSize, width, height)
+        public RenderGraphNodeBase(bool wantDepth = false, bool inheritSize = false, int width = 256, int height = 256) : base()
         {
+            InheritSizeFromParent = inheritSize;
+            Resources.Add(OutputBuffer = new GBuffer("gbuffer", wantDepth, width, height));
+
             _inputProxy = new DictionaryProxy<string, IPort, GraphNodePort>(_input);
             _outputProxy = new DictionaryProxy<string, IPort, GraphNodePort>(_output);
+
         }
+
 
         protected abstract void AssignInputs();
         protected abstract void AssignOutputs();
 
         public override void Render(IFrameRenderData frameData, IFrameBufferTarget target)
         {
-            if (target != null)
+            if (Visible)
             {
-                throw new InvalidOperationException($"A {GetType().Name} cannot be rendered to a target.");
+                AssignInputs();
+                (ChildComponent as IRenderable)?.Render(frameData, IsRoot ? target : OutputBuffer);
+                AssignOutputs();
             }
-            // get inputs
-            AssignInputs();
-
-            base.Render(frameData, null);
-
-            // set outputs
-            AssignOutputs();
-
         }
+
+
+        public override void Resize(int width, int height)
+        {
+            if (InheritSizeFromParent)
+            {
+                OutputBuffer?.Resize(width, height);
+            }
+        }
+
+        public void SetOutput(int index, TextureSlotParam texparam)
+        {
+            LogTrace($"{index} -> {texparam}");
+            OutputBuffer.SetSlot(index, texparam);
+        }
+        public Texture GetTexture(int slot)
+        {
+            return OutputBuffer.GetTextureAtSlot(slot);
+        }
+
+
     }
 }
