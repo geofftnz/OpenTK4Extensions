@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenTK.Input;
+using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTKExtensions.Resources;
 
 namespace OpenTKExtensions.Framework
 {
-    public class WrappedGameComponentBase : GameComponentBase, IResizeable, IReloadable, IUpdateable, IRenderable, IKeyboardControllable
+    public class WrappedGameComponentBase : GameComponentBase, IResizeable, IReloadable, IUpdateable, IRenderable, IKeyboardControllable, ITransformable
     {
         private IGameComponent _childComponent;
         protected IGameComponent ChildComponent
@@ -28,6 +29,9 @@ namespace OpenTKExtensions.Framework
         public int DrawOrder { get; set; } = 0;
         public bool IsFinalOutput { get; set; } = true;
         public int KeyboardPriority { get; set; } = 0;
+        public Matrix4 ViewMatrix { get; set; }
+        public Matrix4 ModelMatrix { get; set; }
+        public Matrix4 ProjectionMatrix { get; set; }
 
         public WrappedGameComponentBase()
             : base()

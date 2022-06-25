@@ -21,8 +21,8 @@ namespace OpenTKExtensions.Framework
         public bool Visible { get; set; } = true;
         public bool IsFinalOutput { get; set; } = true;
 
-        public Action TextureBinds { get; set; }
-        public Action<ShaderProgram> SetShaderUniforms { get; set; }
+        public Action<IFrameRenderData> TextureBinds { get; set; }
+        public Action<ShaderProgram, IFrameRenderData> SetShaderUniforms { get; set; }
 
         protected ReloadableResource<ShaderProgram> Shader;
         protected BufferObject<Vector3> VertexBuffer;
@@ -78,10 +78,10 @@ namespace OpenTKExtensions.Framework
             GL.Disable(EnableCap.Blend);
             GL.Disable(EnableCap.DepthTest);
 
-            TextureBinds?.Invoke();
+            TextureBinds?.Invoke(frameData);
 
             Shader.Resource.Use();
-            SetShaderUniforms?.Invoke(Shader.Resource);
+            SetShaderUniforms?.Invoke(Shader.Resource, frameData);
 
             VertexBuffer.Bind(Shader.Resource.VariableLocations["vertex"]);
             IndexBuffer.Bind();

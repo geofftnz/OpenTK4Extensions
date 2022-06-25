@@ -41,16 +41,16 @@ namespace OpenTKExtensions.Framework.Graph
         }
 
 
-        protected abstract void AssignInputs();
-        protected abstract void AssignOutputs();
+        protected abstract void AssignInputs(IFrameRenderData frameData);
+        protected abstract void AssignOutputs(IFrameRenderData frameData);
 
         public override void Render(IFrameRenderData frameData, IFrameBufferTarget target)
         {
             if (Visible)
             {
-                AssignInputs();
+                AssignInputs(frameData);
                 (ChildComponent as IRenderable)?.Render(frameData, IsRoot ? target : OutputBuffer);
-                AssignOutputs();
+                AssignOutputs(frameData);
             }
         }
 

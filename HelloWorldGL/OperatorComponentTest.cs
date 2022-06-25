@@ -16,9 +16,9 @@ namespace HelloWorldGL
 
         public OperatorComponentTest() : base("operatorcomponenttest.vert.glsl", "operatorcomponenttest.frag.glsl")
         {
-            TextureBinds = () => { };
+            TextureBinds = (fd) => { };
 
-            SetShaderUniforms = (sp) =>
+            SetShaderUniforms = (sp,fd) =>
             {
                 if (sp != null)
                 {

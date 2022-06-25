@@ -8,8 +8,8 @@
     <Description>A collection of extensions for OpenTK4. Somewhat inspired by, and a poor cousin to, XNA. Used for my personal projects.</Description>
     <Copyright>©2013-2020 Geoff Thornburrow</Copyright>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <Version>1.0.64</Version>
-    <AssemblyVersion>1.0.113.0</AssemblyVersion>
+    <Version>1.0.73</Version>
+    <AssemblyVersion>1.0.122.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
