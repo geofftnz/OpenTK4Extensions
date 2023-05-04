@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>OpenTKExtensions</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Geoff Thornburrow</Authors>
     <Description>A collection of extensions for OpenTK4. Somewhat inspired by, and a poor cousin to, XNA. Used for my personal projects.</Description>
     <Copyright>©2013-2020 Geoff Thornburrow</Copyright>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <Version>1.0.73</Version>
-    <AssemblyVersion>1.0.122.0</AssemblyVersion>
+    <Version>1.0.86</Version>
+    <AssemblyVersion>1.0.135.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

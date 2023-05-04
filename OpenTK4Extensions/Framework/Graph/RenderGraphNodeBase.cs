@@ -1,4 +1,5 @@
-﻿using OpenTKExtensions.Common;
+﻿using OpenTK.Mathematics;
+using OpenTKExtensions.Common;
 using OpenTKExtensions.Resources;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace OpenTKExtensions.Framework.Graph
 
         public string Name { get; set; }
 
-        public bool InheritSizeFromParent { get; set; } = false;
+        public SizeInheritance InheritSizeFromParent { get; set; } = SizeInheritance.None;
         protected GBuffer OutputBuffer;
 
         protected Dictionary<string, GraphNodePort> _input { get; } = new();
@@ -30,7 +31,7 @@ namespace OpenTKExtensions.Framework.Graph
 
         public bool HasRendered { get; set; }
 
-        public RenderGraphNodeBase(bool wantDepth = false, bool inheritSize = false, int width = 256, int height = 256) : base()
+        public RenderGraphNodeBase(bool wantDepth = false, SizeInheritance inheritSize = SizeInheritance.None, int width = 256, int height = 256) : base()
         {
             InheritSizeFromParent = inheritSize;
             Resources.Add(OutputBuffer = new GBuffer("gbuffer", wantDepth, width, height));
@@ -57,10 +58,13 @@ namespace OpenTKExtensions.Framework.Graph
 
         public override void Resize(int width, int height)
         {
-            if (InheritSizeFromParent)
+            (width, height) = InheritSizeFromParent.InheritFrom(width, height);
+
+            if (InheritSizeFromParent != SizeInheritance.None)
             {
                 OutputBuffer?.Resize(width, height);
             }
+            base.Resize(width, height);
         }
 
         public void SetOutput(int index, TextureSlotParam texparam)

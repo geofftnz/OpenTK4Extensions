@@ -32,6 +32,7 @@ namespace OpenTKExtensions.Framework
         public Matrix4 ViewMatrix { get; set; }
         public Matrix4 ModelMatrix { get; set; }
         public Matrix4 ProjectionMatrix { get; set; }
+        protected float AspectRatio = 1f;
 
         public WrappedGameComponentBase()
             : base()
@@ -61,6 +62,7 @@ namespace OpenTKExtensions.Framework
 
         public virtual void Resize(int width, int height)
         {
+            AspectRatio = (height > 0f) ? (float)width / (float)height : 1f;
             (ChildComponent as IResizeable)?.Resize(width, height);
         }
 

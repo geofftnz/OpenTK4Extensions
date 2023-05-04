@@ -15,7 +15,7 @@ namespace OpenTKExtensions.Framework
     /// <summary>
     /// Base class for an "operator" component: one that renders a quad using a shader, almost always to a render target. 
     /// </summary>
-    public class OperatorComponentBase : GameComponentBase, IGameComponent, IRenderable, IReloadable
+    public class OperatorComponentBase : GameComponentBase, IGameComponent, IRenderable, IReloadable, IResizeable
     {
         public int DrawOrder { get; set; }
         public bool Visible { get; set; } = true;
@@ -27,6 +27,8 @@ namespace OpenTKExtensions.Framework
         protected ReloadableResource<ShaderProgram> Shader;
         protected BufferObject<Vector3> VertexBuffer;
         protected BufferObject<uint> IndexBuffer;
+
+        protected float AspectRatio = 1f;
 
         //protected const int MAXOUTPUTS = 16;
         //protected OperatorOutput[] outputs = new OperatorOutput[MAXOUTPUTS];
@@ -90,10 +92,15 @@ namespace OpenTKExtensions.Framework
 
         }
 
-
         public virtual void Reload()
         {
             Resources.Reload();
         }
+
+        public void Resize(int width, int height)
+        {
+            AspectRatio = (height > 0f) ? (float)width / (float)height : 1f;
+        }
+
     }
 }
